@@ -20,18 +20,17 @@ os.chdir('..')
 
 table = soup.find('table', {'class': 'normal'})
 trs = table.find_all('tr')
-grades = [u'優上', u'優', u'良', u'可', u'不可'] 
-points = dict(zip(grades, [4.3, 4., 3., 2., 0.]))
+points = {u'優上': 4.3, u'優': 4., u'良': 3., u'可': 2., u'不可': 0.}
 credits = collections.defaultdict(int)
 for tr in trs[1:]:
     tds = tr.find_all('td')
-    credit =  float(tds[7].text)
+    credit = float(tds[7].text)
     grade = tds[10].text
     credits[grade] += credit
-for grade in grades:
+
+for grade, _ in sorted(points.items(), key=lambda x: x[1], reverse=True):
     print u'{}: {}'.format(grade, credits[grade])
-sumof_credits = sum(credit for grade, credit in credits.items()
-                    if grade in points)
+sumof_credits = sum(credits[grade] for grade in points.keys())
 print u'GPA換算単位数:', sumof_credits
 gpa = sum(point * credits[grade] for grade, point in points.items())
 gpa /= sumof_credits
