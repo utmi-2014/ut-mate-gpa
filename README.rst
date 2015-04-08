@@ -18,7 +18,7 @@ Usage
   python gpa.py
 
 
-LICENSE
+License
 -------
 | Copyright (c) 2015 utmi-2014 Contributors
 | Released under the MIT license
